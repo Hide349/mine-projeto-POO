@@ -12,6 +12,10 @@ public class Campeonato {
 		this.clubes = clubes;
 	}
 	
+	public int sortearGols(int max, int min) {
+		return (int)(Math.random() * (max - min + 1)+min);
+	}
+	
 	public void jogaCampeonato() {
 		for(int i = 0; i< clubes.size();i++) {
 			for(int j = 0; j< clubes.size();j++) {
@@ -27,8 +31,8 @@ public class Campeonato {
 	}
 	
 	private void jogarPartida(Clube clubeA, Clube clubeB) {
-			int golA = (int)(Math.random() * (5 - 0 + 1)+0);
-			int golB = (int)(Math.random() * (5 - 0 + 1)+0);
+			int golA = sortearGols(5,0);
+			int golB = sortearGols(5,0);
 			System.out.printf("A partida entre %s e %s está rolando...%n",clubeA.getNome(),clubeB.getNome());
 			try {
 				Thread.sleep(2000);
@@ -53,8 +57,8 @@ public class Campeonato {
 	
 	private String getClassificacao() {
 		int i = 1;
-		String frase = "Pos | Nome | Pontos | Saldo de gols %n";
-		clubes.sort(Comparator.comparing(Clube::getPontos).thenComparing(Clube::getSaldoGols).reversed());
+		String frase = "Pos | Nome | Pontos | Saldo Gols  | Vitórias %n";
+		clubes.sort(Comparator.comparing(Clube::getPontos).thenComparing(Clube::getSaldoGols).thenComparing(Clube::getNumeroVitorias).reversed());
 		for(Clube obj : clubes) {
 			frase += String.format("%dº "+obj.toString(), i);
 			i++;
